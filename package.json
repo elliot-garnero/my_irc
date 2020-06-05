@@ -1,0 +1,30 @@
+{
+  "name": "my_irc",
+  "version": "1.0.0",
+  "description": "simple irc app with channels",
+  "main": "app.js",
+  "dependencies": {
+    "@material-ui/core": "^4.10.1",
+    "concurrently": "^5.2.0",
+    "express": "^4.17.1",
+    "node": "^14.4.0",
+    "nodemon": "^2.0.4",
+    "react-router-dom": "^5.2.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.epitech.eu:/elliot.garnero@epitech.eu/my_irc"
+  },
+  "author": "",
+  "license": "ISC"
+}
