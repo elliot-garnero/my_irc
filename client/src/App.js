@@ -11,8 +11,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/home" component={Homepage} />
-          {/* <Route path="/channels" exact component={ChannelsList} />
-          <Route path="/channels/:id" component={ChannelDetail} /> */}
+          {/* <Route path="/channels/:id" component={ChannelDetail} /> */}
         </Switch>
       </div>
     </Router>
