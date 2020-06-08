@@ -10,14 +10,17 @@ export default class LoginPage extends React.Component {
   state = {
     name: '',
     errorMessage: '',
+    channel:'general'
   };
 
   onLoginSubmit = (e) => {
     e.preventDefault();
     let { name } = this.state;
+    let { channel } = this.state;
     if (name !== '') {
-      socket.emit('name', name);
+      socket.emit('enter', { name, channel });
       this.setState({ redirectHome: true });
+      
     } else {
       this.setState({ errorMessage: 'Please enter a username' });
     }
@@ -26,7 +29,7 @@ export default class LoginPage extends React.Component {
   onTextChange = (e) => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
-
+  
   render() {
     const redirectHome = this.state.redirectHome;
     if (redirectHome) {
@@ -36,7 +39,7 @@ export default class LoginPage extends React.Component {
           to={{
             pathname: '/Home',
             userName: this.state.name,
-            state: { userName: this.state.name },
+            state: { userName: this.state.name, channel: this.state.channel },
           }}
           userName={this.state.name}
         />
@@ -57,8 +60,8 @@ export default class LoginPage extends React.Component {
         <div className = "alert alert-info">
           <h1 className={"text-center mt-4"}>Welcome to our IRC</h1>
         </div> 
-        <form  onSubmit={this.onLoginSubmit}>
-        <Form className={"form"} style={mystyle}>
+        <form className={"form"} style={mystyle} onSubmit={this.onLoginSubmit}>
+        
             <InputGroup  className="mb-2 mt-4">
               <InputGroup.Prepend>
                   <InputGroup.Text>Choose a username :</InputGroup.Text>
@@ -73,7 +76,7 @@ export default class LoginPage extends React.Component {
               </InputGroup>
             <Button className="mt-4" type="submit" >Enter</Button>
             {this.state.name.length < 1 && <h3>{this.state.errorMessage}</h3>}
-        </Form>
+        
         </form> 
       </Container>
       // <div className="card">

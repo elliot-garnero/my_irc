@@ -38,7 +38,7 @@ export default function UserChat(props) {
                     <InputGroup.Prepend>
                         <InputGroup.Text>@</InputGroup.Text>
                     </InputGroup.Prepend>
-                    <FormControl value={state.name} />
+                    <FormControl placeholder={state.name} />
                 </InputGroup>
             </Col>
 

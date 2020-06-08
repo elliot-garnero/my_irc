@@ -3,8 +3,15 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
-  socket.on('message', ({ name, message }) => {
-    io.emit('message', { name, message });
+  socket.on('message', ({ name, message, channel }) => {
+    if(message !== ''){
+      io.emit('message', { name, message, channel });
+    }
+  });
+  socket.on('enter', ({ name, channel }) => {
+    let today = new Date()
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' at '+ today.getHours() + " H " + today.getMinutes();
+    io.emit('enter', { name, channel, date })
   });
 });
 

@@ -25,7 +25,7 @@ export default function Users(props) {
       
         <nav id="sidebar">
 
-        <ul class="list-unstyled components">
+        <ul>
             <h3>Users</h3>
             {renderUsers()}
                                 

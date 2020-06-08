@@ -3,13 +3,19 @@ import io from 'socket.io-client';
 import "bootstrap/dist/css/bootstrap.css";
 
 
-
-
 const socket = io.connect('http://localhost:4000');
 
 export default function Channels(props) {
-
-    const [channels, setChannels] = useState([]);
+    console.log(props)
+    const [channels, setChannels] = useState(['general','video_games','cars']);
+    const [currentChannel, SetCurrentChannel] = useState()
+    
+    const onChannelChange = (channel) => {
+        
+        // SetCurrentChannel(currentChannel,  channel );
+        // socket.emit('enter', { name: 'chris', currentChannel });
+        
+    };
 
     const renderChannels = () => {
         return channels.map(({ channelName, proprio, adress }, index) => (
@@ -18,12 +24,13 @@ export default function Channels(props) {
             </li>
             
         ));
-        };
+    };
+
 
     return (
               
         <nav id="sidebar">
-        <div class="sidebar-header">
+        <div className="sidebar-header">
             <h3>Profil</h3>
             <ul>
         
@@ -40,10 +47,15 @@ export default function Channels(props) {
             </ul>
         </div>
 
-        <ul class="list-unstyled components">
+        <ul>
             <h3>Channels</h3>
             {renderChannels()}
-            
+            <li key="0">
+                <a href="" onClick={onChannelChange('video games')}>Video Games</a>
+            </li>
+            <li key="1">
+                <a href="cars">Cars</a>
+            </li>
         </ul>
         </nav>
               

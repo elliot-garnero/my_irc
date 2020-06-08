@@ -22,8 +22,8 @@ export default class Header extends React.Component {
 
     return (
         
-        <Row className={"alert alert-warning"} style={mystyle}>
-            <h1>Header</h1>
+        <Row  style={mystyle}>
+            <h1>IRC</h1>
         </Row>
        
     );
