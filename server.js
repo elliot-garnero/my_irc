@@ -3,15 +3,22 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
-  socket.on('message', ({ name, message, channel }) => {
-    if(message !== ''){
-      io.emit('message', { name, message, channel });
+  let today = new Date()
+  var options = { month: 'long'};
+  let month = new Intl.DateTimeFormat('en-US', options).format(today);
+  let date = today.getFullYear()+'/'+month+'/'+today.getDate()+' at '+ today.getHours() + "H" + today.getMinutes();
+  socket.on('message', ({ name, channel, message, action }) => {
+    if(action =='enter'){
+      io.emit('message', { name, channel, date, action})
     }
+    else if(message !== ''){
+      io.emit('message', { name, channel, message, date });
+    }
+    
   });
-  socket.on('enter', ({ name, channel }) => {
-    let today = new Date()
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' at '+ today.getHours() + " H " + today.getMinutes();
-    io.emit('enter', { name, channel, date })
+ 
+  socket.on ( 'deconnexion' , () => {
+    io.emit('message', { name, channel, date, action : 'quit' })
   });
 });
 

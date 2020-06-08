@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import "bootstrap/dist/css/bootstrap.css";
 import { Button, Form, Col, InputGroup,FormControl, Row, Container } from 'react-bootstrap';
 
-const socket = io.connect('http://localhost:4000');
+
 
 export default class Header extends React.Component {
   state = {

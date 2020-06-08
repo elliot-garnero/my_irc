@@ -14,9 +14,9 @@ export default function Homepage(props) {
   const [state, setState] = useState({
     message: '',
     name: props.location.state.userName,
-    channel: props.location.state.channel
+    channel: props.location.state.channel,
   });
-  
+   
 
   const onTextChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -24,8 +24,8 @@ export default function Homepage(props) {
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
-    const { name, message, channel } = state;
-    socket.emit('message', { name, message, channel });
+    const { name, channel, message } = state;
+    socket.emit('message', { name, channel, message });
     setState({ message: '', name , channel});
   };
 

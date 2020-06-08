@@ -10,7 +10,8 @@ export default class LoginPage extends React.Component {
   state = {
     name: '',
     errorMessage: '',
-    channel:'general'
+    channel:'general',
+    
   };
 
   onLoginSubmit = (e) => {
@@ -18,7 +19,7 @@ export default class LoginPage extends React.Component {
     let { name } = this.state;
     let { channel } = this.state;
     if (name !== '') {
-      socket.emit('enter', { name, channel });
+      socket.emit('message', { name, channel, action : 'enter' });      
       this.setState({ redirectHome: true });
       
     } else {

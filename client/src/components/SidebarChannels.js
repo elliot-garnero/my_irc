@@ -3,10 +3,10 @@ import io from 'socket.io-client';
 import "bootstrap/dist/css/bootstrap.css";
 
 
-const socket = io.connect('http://localhost:4000');
+
 
 export default function Channels(props) {
-    console.log(props)
+    
     const [channels, setChannels] = useState(['general','video_games','cars']);
     const [currentChannel, SetCurrentChannel] = useState()
     
