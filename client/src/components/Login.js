@@ -8,14 +8,15 @@ export default class LoginPage extends React.Component {
   state = {
     name: '',
     errorMessage: '',
-    channel: 'general',
+    
   };
 
   onLoginSubmit = (e) => {
     e.preventDefault();
-    let { name, channel } = this.state;
+    let { name } = this.state;
     if (name !== '') {
-      socket.emit('message', { name, channel, action: 'enter' });
+      socket.emit('newUser', name); 
+      socket.emit('message', { name, action: 'enter' });
       this.setState({ redirectHome: true });
     } else {
       this.setState({ errorMessage: 'Please enter a username' });
@@ -35,7 +36,7 @@ export default class LoginPage extends React.Component {
             pathname: '/Home',
             state: {
               userName: this.state.name,
-              channel: this.state.channel,
+              
             },
           }}
         />

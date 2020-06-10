@@ -6,11 +6,11 @@ export default function Users(props) {
   const [users, setUsers] = useState([]);
 
   socket.on('visitors', (newVisitors) => {
-    setUsers(newVisitors);
+    setUsers(newVisitors);console.log(newVisitors)
   });
-
+console.log(users)
   const renderUsers = () => {
-    return users.map(({ name }, index) => (
+    return users.map(( name , index) => (
       <li key={index}>
         <span>{name}</span>
       </li>

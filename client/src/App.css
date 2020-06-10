@@ -62,3 +62,6 @@ li {
 .date {
   font-size: 12px;
 }
+#chat{
+  overflow-y: scroll;
+}

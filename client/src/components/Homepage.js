@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import Channels from './SidebarChannels';
 import Header from './Header';
 import Users from './SidebarUsers';
@@ -18,13 +19,18 @@ export default function Homepage(props) {
   const [state, setState] = useState({
     message: '',
     name: props.location.state.userName,
-    channel: props.location.state.channel,
+    channel: props.location.state.channel
+      ? props.location.state.channel
+      : 'general',
+    redirectHome: false
   });
   const [chat, setChat] = useState([]);
 
-  useEffect(() => {
-    socket.emit('newUser', { name: state.name });
-  }, []);
+   useEffect(() => {
+    socket.on('updatename', (newname) => {
+      setState({ name: newname });
+    })
+   }, []);
 
   const onTextChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -34,10 +40,8 @@ export default function Homepage(props) {
     e.preventDefault();
     if (state.message !== '') {
       const { name, message, channel } = state;
-      socket.emit('message', { name, message, channel });
-      socket.on('message', ({ name, message }) => {
-        setChat([...chat, { name, message, channel }]);
-      });
+      socket.emit('sendchat', message);
+      
       setState({ message: '', name, channel });
     } else {
     }
@@ -48,18 +52,34 @@ export default function Homepage(props) {
     width: '100%',
     height: '800px',
     justifyContent: 'center',
+    wordWrap: 'break-word',
   };
 
   const sidestyle = {
     height: '800px',
   };
 
+  const redirectHome = state.redirectHome;
+    if (redirectHome) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/Home',
+            state: {
+              userName: state.name,
+              
+            },
+          }}
+        />
+      );
+    }
+
   return (
     <Container fluid>
       <Row>
-        <Header />
+        <Header channel={state.channel} name={state.name}/>
         <Col md={2} className={'component'} style={sidestyle}>
-          <Channels />
+        <Channels channel={state.channel} name={state.name} />
         </Col>
         <Col md={8} className={'component'} style={mainstyle}>
           <Chat />
