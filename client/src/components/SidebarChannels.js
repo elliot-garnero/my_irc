@@ -8,26 +8,27 @@ import {
 } from 'react-bootstrap';
 
 export default function Channels({channel}) {
-
-   const [channels, setChannels] = useState([]);
-
-  const [currentChannel, SetCurrentChannel] = useState();
+console.log(channel)
+  const [channels, setChannels] = useState([]);
   const [name, setName] = useState({name:''});
-  const [chanName, setChanName] = useState({name:''});
+  const [chanName, setChanName] = useState({channelname:''});
 
 
 useEffect(() => {
   
   socket.on('updaterooms',  (rooms,channelName ) => {
-  (rooms.includes(channelName) ? rooms.includes(channelName) : rooms.push(channelName))
-    console.log(rooms)
+    
+  (channels.includes(channelName) ? channels.includes(channelName) : channels.push(channelName))
+    console.log(channels)
     console.log(channelName)
+    console.log(rooms)
+    
     setChannels( rooms)
    
   })
 }, [channels]);
 
-  const renderChannels = () => {
+  const renderChannels = () => {console.log(channels)
     return channels.map((channelName, index) => (
       <li key={index}>
         {ActionLink(channelName)}
@@ -35,26 +36,27 @@ useEffect(() => {
     ));
   };
 
-  const onChanChange = (e) => {
+  const onChannelChange = (e) => {
     setChanName({ ...chanName, [e.target.name]: e.target.value });
   };
-  const onTextChange = (e) => {
+  const onNameChange = (e) => {
     setName({ ...name, [e.target.name]: e.target.value });
   };
 
-  const onChangeName = (e) => {
+  const onAddName = (e) => {
     e.preventDefault()
-     if (chanName !== '') {
-   
-     socket.emit('switchName', chanName.name );
+     if (name !== '') {
+     socket.emit('switchName', name.name );
+     setName({name:'' });
    };
  }
 
   const onAddChannel = (e) => {
    e.preventDefault()
-    if (name !== '') {
-     console.log(name);    
-    socket.emit('switchRoom', name.name );
+    if (chanName !== '') {
+        
+    socket.emit('switchRoom', chanName.channelname );
+    setChanName({channelname:''})
   };
 }
 
@@ -66,7 +68,7 @@ useEffect(() => {
         <ul>
           
             <li>Change username</li>
-            <form onSubmit={onChangeName}>
+            <form onSubmit={onAddName}>
             <InputGroup className="mb-2 mt-2">
               <InputGroup.Prepend>
                 <InputGroup.Text>Username :</InputGroup.Text>
@@ -74,8 +76,8 @@ useEffect(() => {
               <FormControl
               
               name={'name'}
-              onChange={(e) => onChanChange(e)}
-              value={chanName.name}
+              onChange={(e) => onNameChange(e)}
+              value={name.name}
               id={'name'}
               className={'name'}
                />
@@ -89,11 +91,11 @@ useEffect(() => {
               </InputGroup.Prepend>
               <FormControl
               
-              name={'name'}
-              onChange={(e) => onTextChange(e)}
-              value={name.name}
-              id={'name'}
-              className={'name'}
+              name={'channelname'}
+              onChange={(e) => onChannelChange(e)}
+              value={chanName.channelname}
+              id={'channelname'}
+              className={'channelname'}
                />
             </InputGroup>
           </form>

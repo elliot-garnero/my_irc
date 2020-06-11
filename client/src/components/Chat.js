@@ -9,11 +9,8 @@ export default function Header(props) {
   
 
   useEffect(() => {
-    socket.on('updatechat',( name, message, date, channel ) => {
-      console.log(name)
-      console.log(message)
-      
-      setChat((chat) => [...chat, { name, message, date, channel }]);
+    socket.on('updatechat',( name, message, date ) => {     
+      setChat((chat) => [...chat, { name, message, date}]);
     })
   }, [room]); 
 console.log(chat)
@@ -21,7 +18,7 @@ console.log(chat)
 
   const renderChat = () => {
 
-      return chat.map(({ name, message, date, channel}, index) => (
+      return chat.map(({ name, message, date}, index) => (
         <li key={index}>
           Message from <b className="text-uppercase">{name} </b>
           <span className="text-muted font-weight-light date">{date} : </span>
@@ -34,7 +31,6 @@ console.log(chat)
   return (
     <div id="chat">
     <ul>
-      {/* {renderRoom()} */}
       {renderChat()}
     </ul>
     </div>

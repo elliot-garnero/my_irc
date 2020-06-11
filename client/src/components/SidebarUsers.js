@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from './socket';
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default function Users(props) {
+export default function Users() {
   const [users, setUsers] = useState([]);
 
-  socket.on('visitors', (newVisitors) => {
-    setUsers(newVisitors);console.log(newVisitors)
+  useEffect(() => {
+    socket.on('visitors', (newVisitors) => {
+    setUsers(newVisitors);
   });
-console.log(users)
+   }, [users]);
+  
   const renderUsers = () => {
     return users.map(( name , index) => (
       <li key={index}>

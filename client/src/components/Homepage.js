@@ -22,7 +22,6 @@ export default function Homepage(props) {
     channel: props.location.state.channel
       ? props.location.state.channel
       : 'general',
-    redirectHome: false
   });
   const [chat, setChat] = useState([]);
 
@@ -41,7 +40,6 @@ export default function Homepage(props) {
     if (state.message !== '') {
       const { name, message, channel } = state;
       socket.emit('sendchat', message);
-      
       setState({ message: '', name, channel });
     } else {
     }
@@ -59,21 +57,7 @@ export default function Homepage(props) {
     height: '800px',
   };
 
-  const redirectHome = state.redirectHome;
-    if (redirectHome) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/Home',
-            state: {
-              userName: state.name,
-              
-            },
-          }}
-        />
-      );
-    }
-
+  
   return (
     <Container fluid>
       <Row>

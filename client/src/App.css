@@ -63,5 +63,6 @@ li {
   font-size: 12px;
 }
 #chat{
-  overflow-y: scroll;
+  max-height: 750px;
+  overflow-y: auto;
 }
