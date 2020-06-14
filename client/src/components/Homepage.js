@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import Channels from './SidebarChannels';
 import Header from './Header';
 import Users from './SidebarUsers';
@@ -100,7 +99,7 @@ export default function Homepage(props) {
               </Col>
 
               <Col md={2}>
-                <Button className={'btn btn-info btn-block'} type="submit">
+                <Button className={'btn btn-warning btn-block'} type="submit">
                   Envoyer
                 </Button>
               </Col>

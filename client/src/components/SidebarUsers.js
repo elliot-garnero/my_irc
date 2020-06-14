@@ -20,7 +20,7 @@ export default function Users() {
   };
 
   return (
-    <nav id="sidebar">
+    <nav id="sidebar" className="sidebar">
       <ul>
         <h3>Users</h3>
         {renderUsers()}

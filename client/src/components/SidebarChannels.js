@@ -55,7 +55,7 @@ export default function Channels({ channel }) {
 
   return (
     <nav id="sidebar">
-      <div className="sidebar-header">
+      <div className="sidebar-header sidebar">
         <h3>Profil</h3>
         <ul>
           <li>Change username</li>
