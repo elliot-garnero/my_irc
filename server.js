@@ -4,7 +4,7 @@ const io = require('socket.io')(http);
 
 // usernames which are currently connected to the chat
 var usernames = {};
-
+var usersIds = [];
 // rooms which are currently available in chat
 var rooms = ['General', 'Video games', 'Dev', 'Music', 'Computers'];
 
@@ -20,8 +20,8 @@ io.on('connection', (socket) => {
   socket.on('newUser', (user) => {
     console.log('new :', user);
     socket.username = user;
-    socket.userId = { id: socket.id, user: user };
     socket.room = 'General';
+    usersIds[user]= socket.id
     usernames[user] = user;
     socket.join('General');
     socket.emit(
@@ -212,6 +212,26 @@ io.on('connection', (socket) => {
       .emit('updatechat', 'SERVER', socket.username + ' has joined this room');
   }
 
+  function message(expression) {
+    let messageSending = expression.substr(expression.indexOf(' '));
+    messageSending = messageSending.substr(1);
+    let userSending = expression.substr(0, expression.indexOf(' '));
+    let dest = '';          
+    arr = Array.from(Object.keys(io.sockets.sockets));
+    arr.forEach((element) => {
+      if (element == usersIds[userSending]) {
+        dest = element;
+      }
+    });
+    console.log(dest)
+    io.to(socket.id).emit(
+      'updatechat',
+      'SERVER',
+      'Your message has been sent to '+userSending+' !'
+    );
+    io.to(dest).emit('updatechat', socket.username, messageSending);
+  }
+
   function listUsers() {
     let nameString = '';
     let data = getAllUsers();
@@ -251,20 +271,7 @@ io.on('connection', (socket) => {
           listUsers();
           break;
         case 'msg':
-          let messageSending = expression.substr(expression.indexOf(' '));
-          messageSending = messageSending.substr(1);
-          let userSending = expression.substr(0, expression.indexOf(' '));
-          let dest = '';
-          arr = Array.from(Object.keys(io.sockets.sockets));
-          arr.forEach((element) => {
-            if (element == socket.userId.id) {
-              dest = socket.userId.id;
-            }
-          });
-          io.socket
-            .to(dest)
-            .emit('updatechat', socket.username, messageSending);
-          // socket.to(dest).emit('updatechat', userSending, messageSending);
+          message(expression);
           break;
         default:
           io.sockets

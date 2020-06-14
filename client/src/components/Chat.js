@@ -17,10 +17,11 @@ console.log(chat)
   
 
   const renderChat = () => {
-
+    
       return chat.map(({ name, message, date}, index) => (
         <li key={index}>
-          Message from <b className="text-uppercase">{name} </b>
+          
+          Message from <b className="bg-success">{name} </b>
           <span className="text-muted font-weight-light date">{date} : </span>
           <span>{message}</span>
         </li>
